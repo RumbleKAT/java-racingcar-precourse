@@ -2,13 +2,17 @@ package racingcar;
 
 public class GameManager {
 
-    static Car [] cars;
+    private Car [] cars;
 
     public void setup(String inputs){
         String [] users = inputs.split(",");
-        cars = new Car[users.length];
+        this.cars = new Car[users.length];
         for (int i=0;i<users.length;i++){
-            cars[i] = new Car(users[i]);
+            this.cars[i] = new Car(users[i]);
         }
+    }
+
+    public void setCarMovement(int index, int movement){
+        cars[index].setMovement(cars[index].getMovement()+movement);
     }
 }
