@@ -26,14 +26,14 @@ public class Cars {
 
     public void showWinners(int count){
         List<Car> winners = getWinners(count);
-        StringBuilder winner = new StringBuilder();
-        for(int i=0;i<cars.size();i++){
-            winner.append(cars.get(i).getName());
+        StringBuilder result = new StringBuilder();
+        for(int i=0;i<winners.size();i++){
+            result.append(winners.get(i).getName());
             if(i < cars.size()-1){
-                winner.append(", ");
+                result.append(", ");
             }
         }
-        System.out.println("최종 우승자 : " + winner);
+        System.out.println("최종 우승자 : " + result);
     }
 
     public void showScore(){
