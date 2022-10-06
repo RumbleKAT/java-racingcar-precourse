@@ -1,18 +1,120 @@
 package racingcar;
 
+import camp.nextstep.edu.missionutils.Console;
+import camp.nextstep.edu.missionutils.Randoms;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 public class GameManager {
 
     private Car [] cars;
+    private int count;
 
-    public void setup(String inputs){
-        String [] users = inputs.split(",");
-        this.cars = new Car[users.length];
-        for (int i=0;i<users.length;i++){
-            this.cars[i] = new Car(users[i]);
+    public void setup(String [] inputs, int count){
+        this.cars = new Car[inputs.length];
+        for (int i=0;i<inputs.length;i++){
+            this.cars[i] = new Car(inputs[i]);
+        }
+        this.count = count;
+    }
+
+    public void init(){
+        String [] inputs = getCars();
+        int counts = getCount();
+        setup(inputs, counts);
+    }
+
+    public String [] getCars(){
+        boolean isFlg = false;
+        String [] cars;
+        do{
+            isFlg = false;
+            cars = Console.readLine().split(",");
+            try{
+                for(String car : cars){
+                    if(car.length() >= 6) throw new IllegalArgumentException();
+                }
+            }catch (IllegalArgumentException exception){
+                System.out.println("[ERROR] car name's length cannot be over 6 characters");
+                isFlg = true;
+            }
+        }while (isFlg);
+        return cars;
+    }
+    public int getCount(){
+        boolean isFlg = false;
+        int counts = 0;
+        do {
+            try {
+                isFlg = false;
+                counts = Integer.parseInt(Console.readLine());
+                if (counts <= 0) throw new IllegalArgumentException();
+            }catch (IllegalArgumentException exception){
+                System.out.println("[ERROR] counts must be positive number");
+                isFlg = true;
+            }
+        }while(isFlg);
+        return counts;
+    }
+
+    public void gameEnd(){
+        List<Car> cars = getWinners();
+        StringBuilder winner = new StringBuilder();
+        for(int i=0;i<cars.size();i++){
+            winner.append(cars.get(i).getName());
+            if(i < cars.size()-1){
+                winner.append(", ");
+            }
+        }
+        System.out.println("최종 우승자 : " + winner);
+    }
+
+
+    public List<Car> getWinners(){
+        List<Car> list = new ArrayList<>();
+        for(Car car : cars){
+            if(car.getMovement() == this.count){
+                list.add(car);
+            }
+        }
+        return list;
+    }
+
+    public void showScore(){
+        for(Car car : cars){
+            System.out.println(car.getName() + " : " + getScore(car.getMovement()));
         }
     }
 
-    public void setCarMovement(int index, int movement){
-        cars[index].setMovement(cars[index].getMovement()+movement);
+    public String getScore(int score){
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<score;i++){
+            sb.append("-");
+        }
+        return sb.toString();
     }
+
+    public boolean play(){
+        boolean isEnd = false;
+        for (Car car : this.cars) {
+            if(isGameOver()) isEnd = true;
+            car.setMovement(moveForward() + car.getMovement());
+        }
+        showScore();
+        return isEnd;
+    }
+
+    public int moveForward(){
+        return Randoms.pickNumberInRange(0,9) >= 4 ? 1 : 0; //
+    }
+    public boolean isGameOver(){
+        for(Car car : cars){
+            if(car.getMovement() == count) return true;
+        }
+        return false;
+    }
+
 }
