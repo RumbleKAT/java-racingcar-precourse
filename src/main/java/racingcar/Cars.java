@@ -9,9 +9,6 @@ public class Cars {
     public Cars(List<Car> cars){
         this.cars = cars;
     }
-    public int getCarsSize(){
-        return this.cars.size();
-    }
 
     public List<Car> getCars(){
         return this.cars;
