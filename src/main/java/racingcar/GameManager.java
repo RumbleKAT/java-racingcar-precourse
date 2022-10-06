@@ -27,22 +27,23 @@ public class GameManager {
     }
 
     public String [] getCars(){
-        boolean isFlg;
-        String [] cars;
-        do{
-            isFlg = false;
-            cars = Console.readLine().split(",");
+        while(true){
             try{
-                for(String car : cars){
-                    if(car.length() >= 6) throw new IllegalArgumentException();
-                }
+                return inputCars();
             }catch (IllegalArgumentException exception){
                 System.out.println("[ERROR] car name's length cannot be over 6 characters");
-                isFlg = true;
             }
-        }while (isFlg);
+        }
+    }
+
+    public String [] inputCars(){
+        String [] cars = Console.readLine().split(",");
+        for(String car : cars){
+            if(car.length() >= 6) throw new IllegalArgumentException();
+        }
         return cars;
     }
+
     public int getCount(){
         while(true){
             try {
