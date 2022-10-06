@@ -4,12 +4,11 @@ import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class GameManager {
 
+    //TODO: 일급 컬렉션 만들기 Cars 사용하기 https://velog.io/@seongwon97/%EC%9D%BC%EA%B8%89-%EC%BB%AC%EB%A0%89%EC%85%98%EC%9D%B4%EB%9E%80
     private Car [] cars;
     private int count;
 
@@ -28,7 +27,7 @@ public class GameManager {
     }
 
     public String [] getCars(){
-        boolean isFlg = false;
+        boolean isFlg;
         String [] cars;
         do{
             isFlg = false;
@@ -45,18 +44,18 @@ public class GameManager {
         return cars;
     }
     public int getCount(){
-        boolean isFlg = false;
-        int counts = 0;
-        do {
+        while(true){
             try {
-                isFlg = false;
-                counts = Integer.parseInt(Console.readLine());
-                if (counts <= 0) throw new IllegalArgumentException();
+                return getInputCounts();
             }catch (IllegalArgumentException exception){
                 System.out.println("[ERROR] counts must be positive number");
-                isFlg = true;
             }
-        }while(isFlg);
+        }
+    }
+
+    public int getInputCounts(){
+        int counts = Integer.parseInt(Console.readLine());
+        if (counts <= 0) throw new IllegalArgumentException();
         return counts;
     }
 
