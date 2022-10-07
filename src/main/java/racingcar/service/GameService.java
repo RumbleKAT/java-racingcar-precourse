@@ -99,8 +99,16 @@ public class GameService {
         return sb.toString();
     }
 
+    public List<Car> getWinners(int count){
+        List<Car> list = new ArrayList<>();
+        for(Car car : cars.getCars()){
+            if(car.getMovement() == count) list.add(car);
+        }
+        return list;
+    }
+
     public void showWinners(int count){
-        List<Car> winners = cars.getWinners(count);
+        List<Car> winners = getWinners(count);
         StringBuilder result = new StringBuilder();
         for(int i=0;i<winners.size();i++){
             result.append(winners.get(i).getName());
