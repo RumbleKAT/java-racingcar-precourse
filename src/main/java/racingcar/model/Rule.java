@@ -9,7 +9,6 @@ public class Rule {
     }
 
     private void validateCount(int count) {
-        if(count >= 6) throw new IllegalArgumentException("[ERROR] counts cannot over the 6 length");
         if(count <= 0) throw new IllegalArgumentException("[ERROR] counts must be positive number");
     }
 
