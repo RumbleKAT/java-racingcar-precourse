@@ -1,12 +1,14 @@
-package racingcar;
+package racingcar.service;
 
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
+import racingcar.model.Cars;
+import racingcar.model.Car;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameManager {
+public class GameService {
     private Cars cars;
     private int count;
 
@@ -61,7 +63,7 @@ public class GameManager {
     }
 
     public void gameEnd(){
-        cars.showWinners(count);
+        showWinners(count);
     }
 
     public boolean play(){
@@ -75,12 +77,38 @@ public class GameManager {
             car.setMovement(moveForward() + car.getMovement());
         }
         this.cars = new Cars(nextCars);
-        cars.showScore();
+        showScore();
         return isEnd;
     }
 
     public int moveForward(){
         return Randoms.pickNumberInRange(0,9) >= 4 ? 1 : 0; //
+    }
+
+    public void showScore(){
+        for(Car car : cars.getCars()){
+            System.out.println(car.getName() + " : " + getScore(car.getMovement()));
+        }
+    }
+
+    public String getScore(int score){
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<score;i++){
+            sb.append("-");
+        }
+        return sb.toString();
+    }
+
+    public void showWinners(int count){
+        List<Car> winners = cars.getWinners(count);
+        StringBuilder result = new StringBuilder();
+        for(int i=0;i<winners.size();i++){
+            result.append(winners.get(i).getName());
+            if(i < cars.getCarsSize()-1){
+                result.append(", ");
+            }
+        }
+        System.out.println("최종 우승자 : " + result);
     }
 
 }
