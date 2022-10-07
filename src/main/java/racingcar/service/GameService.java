@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import racingcar.model.Cars;
 import racingcar.model.Car;
+import racingcar.model.Rule;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,22 +12,21 @@ import java.util.List;
 
 public class GameService {
     private Cars cars;
-    private int count;
+    private Rule rule;
 
-    public void setup(String [] inputs, int count){
+    public void setup(String [] inputs){
         List<Car> carList = new ArrayList<>();
         for (String input : inputs) {
             Car car = new Car(input);
             carList.add(car);
         }
         cars = new Cars(carList);
-        this.count = count;
     }
 
     public void init(){
         String [] inputs = getCars();
-        int counts = getCount();
-        setup(inputs, counts);
+        rule = getRuleCount();
+        setup(inputs);
     }
 
     public String [] getCars(){
@@ -51,31 +51,26 @@ public class GameService {
         return cars;
     }
 
-    public int getCount(){
+    public Rule getRuleCount(){
         while(true){
             try {
-                return getInputCounts();
+                int counts = Integer.parseInt(Console.readLine());
+                return new Rule(counts);
             }catch (IllegalArgumentException exception){
                 System.out.println(exception.getMessage());
             }
         }
     }
 
-    public int getInputCounts(){
-        int counts = Integer.parseInt(Console.readLine());
-        if (counts <= 0) throw new IllegalArgumentException("[ERROR] counts must be positive number");
-        return counts;
-    }
-
     public void gameEnd(){
-        showWinners(count);
+        showWinners(rule.getCount());
     }
 
     public boolean play(){
         boolean isEnd = false;
         List<Car> nextCars = this.cars.getCars();
         for (Car car : nextCars) {
-            if(car.getMovement() == count){
+            if(car.getMovement() == rule.getCount()){
                 isEnd = true;
                 continue;
             }
