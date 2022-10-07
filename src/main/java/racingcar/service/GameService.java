@@ -77,7 +77,6 @@ public class GameService {
             car.setMovement(moveForward() + car.getMovement());
         }
         this.cars = new Cars(nextCars);
-        showScore();
         return isEnd;
     }
 
@@ -89,6 +88,7 @@ public class GameService {
         for(Car car : cars.getCars()){
             System.out.println(car.getName() + " : " + getScore(car.getMovement()));
         }
+        System.out.println();
     }
 
     public String getScore(int score){

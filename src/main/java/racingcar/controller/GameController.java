@@ -14,7 +14,7 @@ public class GameController {
         gameService.init();
 
         while (!gameService.play()){
-            System.out.println();
+            gameService.showScore();
         }
 
         gameService.gameEnd();
