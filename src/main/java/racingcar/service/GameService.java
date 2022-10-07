@@ -14,41 +14,32 @@ public class GameService {
     private Cars cars;
     private Rule rule;
 
-    public void setup(String [] inputs){
-        List<Car> carList = new ArrayList<>();
-        for (String input : inputs) {
-            Car car = new Car(input);
-            carList.add(car);
-        }
-        cars = new Cars(carList);
-    }
-
     public void init(){
-        String [] inputs = getCars();
+        cars = new Cars(getCars());
         rule = getRuleCount();
-        setup(inputs);
     }
 
-    public String [] getCars(){
+    public List<Car> getCars(){
         while(true){
             try{
-                return inputCars();
+                List<Car> carList = new ArrayList<>();
+                return inputCars(carList);
             }catch (IllegalArgumentException | IllegalStateException exception){
                 System.out.println(exception.getMessage());
             }
         }
     }
 
-    public String [] inputCars(){
+    public List<Car> inputCars(List<Car> carList){
         String [] cars = Console.readLine().split(",");
-        HashMap<String, Integer> duplicated = new HashMap<>();
         if(cars.length <= 1) throw new IllegalArgumentException("[ERROR] cars must be over 1");
+        HashMap<String, Integer> duplicated = new HashMap<>();
         for (String car : cars) {
-            if (car.length() >= 6) throw new IllegalArgumentException("[ERROR] car name's length cannot be over 6 characters");
             if (duplicated.get(car) != null) throw new IllegalStateException("[ERROR] duplicated user existed!");
             duplicated.put(car, 1);
+            carList.add(new Car(car));
         }
-        return cars;
+        return carList;
     }
 
     public Rule getRuleCount(){

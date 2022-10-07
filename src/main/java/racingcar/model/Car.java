@@ -5,8 +5,14 @@ public class Car {
     private int movement;
 
     public Car(String name){
+        validateNameLength(name);
         this.name = name;
         this.movement = 0;
+    }
+
+    public void validateNameLength(String name){
+        if(name.length() >= 6) throw new IllegalArgumentException("[ERROR] name length cannot over the 6 length");
+        if(name.length() <= 0) throw new IllegalArgumentException("[ERROR] name length must over 0 length");
     }
 
     public String getName() {
