@@ -33,10 +33,8 @@ public class GameService {
         while(true){
             try{
                 return inputCars();
-            }catch (IllegalArgumentException exception){
-                System.out.println("[ERROR] car name's length cannot be over 6 characters");
-            }catch (IllegalStateException exception){
-                System.out.println("[ERROR] duplicated user existed!");
+            }catch (IllegalArgumentException | IllegalStateException exception){
+                System.out.println(exception.getMessage());
             }
         }
     }
@@ -44,9 +42,10 @@ public class GameService {
     public String [] inputCars(){
         String [] cars = Console.readLine().split(",");
         HashMap<String, Integer> duplicated = new HashMap<>();
+        if(cars.length <= 1) throw new IllegalArgumentException("[ERROR] cars must be over 1");
         for (String car : cars) {
-            if (car.length() >= 6) throw new IllegalArgumentException();
-            if (duplicated.get(car) != null) throw new IllegalStateException();
+            if (car.length() >= 6) throw new IllegalArgumentException("[ERROR] car name's length cannot be over 6 characters");
+            if (duplicated.get(car) != null) throw new IllegalStateException("[ERROR] duplicated user existed!");
             duplicated.put(car, 1);
         }
         return cars;
@@ -57,14 +56,14 @@ public class GameService {
             try {
                 return getInputCounts();
             }catch (IllegalArgumentException exception){
-                System.out.println("[ERROR] counts must be positive number");
+                System.out.println(exception.getMessage());
             }
         }
     }
 
     public int getInputCounts(){
         int counts = Integer.parseInt(Console.readLine());
-        if (counts <= 0) throw new IllegalArgumentException();
+        if (counts <= 0) throw new IllegalArgumentException("[ERROR] counts must be positive number");
         return counts;
     }
 
