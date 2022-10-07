@@ -46,7 +46,7 @@ public class GameService {
         HashMap<String, Integer> duplicated = new HashMap<>();
         for (String car : cars) {
             if (car.length() >= 6) throw new IllegalArgumentException();
-            if (duplicated.get(car) != -1) throw new IllegalStateException();
+            if (duplicated.get(car) != null) throw new IllegalStateException();
             duplicated.put(car, 1);
         }
         return cars;
