@@ -45,6 +45,15 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    void 중복사용자_입력에_대한_예외_처리() {
+        assertSimpleTest(
+                () -> {
+                    runException("pobi,pobi");
+                    assertThat(output()).contains(ERROR_MESSAGE);
+                }
+        );
+    }
 
     @Override
     public void runMain() {
