@@ -68,7 +68,10 @@ public class GameManager {
         boolean isEnd = false;
         List<Car> nextCars = this.cars.getCars();
         for (Car car : nextCars) {
-            if(car.getMovement() == count) isEnd = true;
+            if(car.getMovement() == count){
+                isEnd = true;
+                continue;
+            }
             car.setMovement(moveForward() + car.getMovement());
         }
         this.cars = new Cars(nextCars);
