@@ -1,18 +1,17 @@
 package racingcar.controller;
 
 import racingcar.service.GameService;
+import racingcar.service.GameServiceImpl;
 
 public class GameController {
 
     private final GameService gameService;
 
     public GameController(){
-        gameService = new GameService();
+        gameService = new GameServiceImpl();
     }
 
     public void playGame(){
-        gameService.init();
-
         while (!gameService.play()){
             gameService.showScore();
         }
