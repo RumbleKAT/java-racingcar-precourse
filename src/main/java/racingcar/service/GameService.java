@@ -6,6 +6,7 @@ import racingcar.model.Cars;
 import racingcar.model.Car;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameService {
@@ -34,14 +35,19 @@ public class GameService {
                 return inputCars();
             }catch (IllegalArgumentException exception){
                 System.out.println("[ERROR] car name's length cannot be over 6 characters");
+            }catch (IllegalStateException exception){
+                System.out.println("[ERROR] duplicated user existed!");
             }
         }
     }
 
     public String [] inputCars(){
         String [] cars = Console.readLine().split(",");
-        for(String car : cars){
-            if(car.length() >= 6) throw new IllegalArgumentException();
+        HashMap<String, Integer> duplicated = new HashMap<>();
+        for (String car : cars) {
+            if (car.length() >= 6) throw new IllegalArgumentException();
+            if (duplicated.get(car) != -1) throw new IllegalStateException();
+            duplicated.put(car, 1);
         }
         return cars;
     }
